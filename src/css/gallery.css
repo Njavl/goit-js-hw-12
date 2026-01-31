@@ -16,6 +16,7 @@
   border-color: #fff #fff transparent transparent;
   box-sizing: border-box;
   animation: rotation 1s linear infinite;
+  overflow: hidden;
 }
 .loader::after,
 .loader::before {
@@ -65,6 +66,11 @@
   width: fit-content;
   margin: 0 auto;
 }
+.load-more {
+  display: block;
+  margin: 0 auto;
+  margin-top: 40px;
+}
 .gallery {
   display: flex;
   flex-direction: row;
@@ -102,4 +108,7 @@
 .description-label {
   font-weight: 600;
   line-height: 1.33333;
+}
+.visually-hidden {
+  display: none;
 }

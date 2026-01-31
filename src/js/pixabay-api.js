@@ -1,12 +1,10 @@
 import axios from 'axios';
 
-import { clearGallery, showLoader } from './render-functions.js';
-
 const API_KEY = '54431760-457b05627b7c92a0f6d8a1d9a';
 const url = 'https://pixabay.com/api';
 
-export default function getImagesByQuery(query) {
-  return axios({
+export default async function getImagesByQuery(query, page) {
+  const option = {
     method: 'GET',
     url: url,
     params: {
@@ -15,14 +13,15 @@ export default function getImagesByQuery(query) {
       image_type: 'photo',
       orientation: 'horizontal',
       safesearch: true,
+      page: page,
+      per_page: 15,
     },
-  })
-    .then(response => {
-      return response.data;
-    })
-    .catch(error => {
-      console.dir(error);
-      throw error;
-    })
-    .finally();
+  };
+
+  try {
+    const response = await axios(option);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
 }

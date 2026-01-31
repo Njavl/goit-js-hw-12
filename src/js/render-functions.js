@@ -6,8 +6,11 @@ const gallery = document.querySelector('.gallery');
 
 const loader = document.querySelector('.loader');
 
+/** @type {HTMLButtonElement}  */
+const loadMoreBtn = document.querySelector('.load-more');
+
 export function createGallery(images) {
-  const markup = images.map(photo => {
+  const markup = images.map(image => {
     const {
       webformatURL,
       largeImageURL,
@@ -16,7 +19,7 @@ export function createGallery(images) {
       views,
       comments,
       downloads,
-    } = photo;
+    } = image;
 
     return `
     <li class="gallery-item">
@@ -51,7 +54,7 @@ export function createGallery(images) {
     `;
   });
 
-  gallery.insertAdjacentHTML('afterbegin', markup.join(''));
+  gallery.insertAdjacentHTML('beforeend', markup.join(''));
 
   const modal = new SimpleLightbox(`.gallery li a`, {
     captions: true,
@@ -60,7 +63,14 @@ export function createGallery(images) {
     captionDelay: 250,
   });
 
-  modal.refresh();
+  const imageToScrole = document.querySelector(
+    `img[src="${images[0].webformatURL}"]`
+  );
+  const position = imageToScrole.getBoundingClientRect();
+  window.scrollBy({
+    top: position.y - 20,
+    behavior: 'smooth',
+  });
 }
 
 export function clearGallery() {
@@ -73,4 +83,12 @@ export function showLoader() {
 
 export function hideLoader() {
   loader.classList.add('visually-hidden');
+}
+
+export function showLoadMoreButton() {
+  loadMoreBtn.classList.remove('visually-hidden');
+}
+
+export function hideLoadMoreButton() {
+  loadMoreBtn.classList.add('visually-hidden');
 }
